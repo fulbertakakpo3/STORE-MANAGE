@@ -18,133 +18,137 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 :root{
-  --s0:#f4f3ee;--s1:#eceae3;--s2:#fff;
-  --bd:rgba(0,0,0,.10);--bds:rgba(0,0,0,.18);--bda:rgba(42,120,214,.45);
-  --tp:#1a1918;--ts:#5a5956;--tm:#898781;
-  --ta:#1556a8;--tg:#1a6e46;--td:#a32d2d;--tw:#7a4d00;--tpo:#4a2fa0;
-  --ba:#ddeeff;--bg:#d4eddd;--br:#fce8e8;--bw:#fff3cd;--bpo:#ede9ff;
-  --fa:#2a78d6;--fah:#1f63b8;--fd:#e24b4a;--fdh:#c43a39;
+  --s0:transparent;
+  --s1:rgba(80,130,255,0.07);
+  --s2:rgba(80,130,255,0.09);
+  --bd:rgba(80,130,255,0.12);
+  --bds:rgba(80,130,255,0.25);
+  --bda:rgba(42,120,214,0.50);
+  --tp:#e8eeff;--ts:#a8b4d8;--tm:#6070a0;
+  --ta:#7abaff;--tg:#4ecf89;--td:#f88;--tw:#ffc246;--tpo:#c0a8ff;
+  --ba:#0d1f50;--bg:#0a3320;--br:#3e1010;--bw:#3a2800;--bpo:#1e1248;
+  --fa:#2a78d6;--fah:#4a98f6;--fd:#e24b4a;--fdh:#c43a39;
   --oa:#fff;--od:#fff;--r:8px;
   --font:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
-@media(prefers-color-scheme:dark){:root{
-  --s0:#1a1918;--s1:#242320;--s2:#2e2c2a;
-  --bd:rgba(255,255,255,.09);--bds:rgba(255,255,255,.16);
-  --tp:#f0ede6;--ts:#c3c2b7;--tm:#73726c;
-  --ta:#6aabff;--tg:#4ecf89;--td:#f88;--tw:#ffc246;--tpo:#b49dff;
-  --ba:#0d2f58;--bg:#0a3320;--br:#3e1010;--bw:#3a2800;--bpo:#1e1248;
-  --fa:#2a78d6;--fah:#3a88e6;
-}}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:var(--font);background:var(--s0);color:var(--tp);-webkit-text-size-adjust:100%}
-button,select,input{touch-action:manipulation} /* évite le double-tap zoom sur iOS */
+body{
+  font-family:var(--font);color:var(--tp);-webkit-text-size-adjust:100%;
+  background-color:#010208;
+  background-image:
+    linear-gradient(160deg, rgba(1,2,10,0.94) 0%, rgba(2,5,18,0.88) 35%, rgba(3,8,24,0.85) 65%, rgba(1,2,12,0.95) 100%),
+    url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1920&q=80&auto=format&fit=crop');
+  background-size:cover;background-position:center;background-attachment:fixed;
+  min-height:100vh;
+}
+button,select,input{touch-action:manipulation;font-family:var(--font)}
 
 /* ── LOGIN ── */
-#SL{display:flex;min-height:100vh;align-items:center;justify-content:center}
+#SL{display:flex;min-height:100vh;align-items:center;justify-content:center;position:relative;z-index:1;
+  background-image:
+    linear-gradient(160deg, rgba(1,2,10,0.94) 0%, rgba(2,5,18,0.88) 40%, rgba(1,2,12,0.95) 100%),
+    url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1920&q=80&auto=format&fit=crop');
+  background-size:cover;background-position:center;}
 #SL.H{display:none}
-.lbox{background:var(--s2);border:none;border-radius:16px;padding:40px 36px;width:360px;box-shadow:0 4px 24px rgba(0,0,0,.10)}
+.lbox{background:rgba(3,8,24,0.92);border:1px solid rgba(80,130,255,0.20);border-radius:16px;padding:40px 36px;width:360px;box-shadow:0 8px 48px rgba(0,5,40,0.75);backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px)}
 .llogo{font-size:20px;font-weight:500;margin-bottom:4px;display:flex;align-items:center;gap:10px}
 .lsub{font-size:12px;color:var(--tm);margin-bottom:28px}
 .fl{font-size:12px;color:var(--ts);margin-bottom:5px;display:block;margin-top:12px}
-.fi{width:100%;padding:10px 38px 10px 12px;border:none;border-radius:var(--r);background:var(--s1);color:var(--tp);font-size:13px;outline:none;font-family:var(--font)}
-.fi:focus{border-color:var(--bda)}
+.fi{width:100%;padding:10px 12px;border:1px solid rgba(80,130,255,0.16);border-radius:var(--r);background:rgba(255,255,255,0.06);color:var(--tp);font-size:13px;outline:none;font-family:var(--font)}
+.fi:focus{border-color:rgba(42,120,214,0.75)}
 .fw{position:relative}
 .fw .fi{padding-right:38px}
 .eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--tm);font-size:16px;padding:0}
 .em{font-size:12px;color:var(--td);margin-top:6px;min-height:18px}
-.lbtn{width:100%;padding:11px;background:var(--fa);color:var(--oa);border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;font-family:var(--font)}
+.lbtn{width:100%;padding:11px;background:var(--fa);color:var(--oa);border:none;border-radius:var(--r);font-size:14px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px}
 .lbtn:hover{background:var(--fah)}
 
 /* ── APP SHELL ── */
-#SA{display:none;height:100vh;overflow:hidden}
+#SA{display:none;height:100vh;overflow:hidden;position:relative;z-index:1;flex-direction:row}
 #SA.A{display:flex}
-.sb{width:220px;min-width:220px;background:var(--s2);border-right:none;display:flex;flex-direction:column;height:100vh;position:fixed;top:0;left:0;z-index:200;transform:translateX(-220px);transition:transform .22s ease;box-shadow:none}
-.sb.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.13)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:199}
+.sb{width:220px;min-width:220px;background:rgba(2,6,20,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-right:1px solid rgba(80,120,255,0.12);display:flex;flex-direction:column;height:100vh;position:fixed;top:0;left:0;z-index:200;transform:translateX(-220px);transition:transform .22s ease}
+.sb.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.4)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199}
 .overlay.show{display:block}
 .hamburger{width:36px;height:36px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tp);font-size:20px;border-radius:var(--r);flex-shrink:0}
-.hamburger:hover{background:var(--s1)}
-.sbl{padding:20px 16px 16px;border-bottom:none}
+.sbl{padding:20px 16px 16px}
 .sbn{font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px}
 .sbs{font-size:11px;color:var(--tm);margin-top:2px}
 .nav{flex:1;padding:8px 0;overflow-y:auto}
 .ns{padding:12px 16px 4px;font-size:10px;font-weight:500;color:var(--tm);letter-spacing:.06em;text-transform:uppercase}
-.ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;color:var(--ts);font-size:13px;border-left:2px solid transparent;user-select:none}
-.ni:hover{background:var(--s1);color:var(--tp)}
-.ni.ac{background:var(--ba);color:var(--ta);border-left-color:var(--bda);font-weight:500}
-.ni i{font-size:16px}
-.nbg{margin-left:auto;background:var(--br);color:var(--td);font-size:10px;font-weight:500;padding:1px 6px;border-radius:10px}
-.sbf{padding:12px 16px;border-top:none}
-.av{width:30px;height:30px;border-radius:50%;background:var(--ba);color:var(--ta);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
-.main{flex:1;display:flex;flex-direction:column;overflow:hidden;margin-left:0}
-.topbar{height:52px;background:var(--s2);border-bottom:none;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.pt{font-size:15px;font-weight:500;flex:1}
-.sbar{display:flex;align-items:center;gap:8px;background:var(--s1);border:none;border-radius:var(--r);padding:6px 12px;width:210px}
-.sbar input{background:none;border:none;outline:none;font-size:13px;color:var(--tp);width:100%;font-family:var(--font)}
-.tbb{display:flex;align-items:center;gap:6px;padding:6px 12px;border:none;border-radius:var(--r);background:var(--s1);cursor:pointer;font-size:13px;color:var(--ts);white-space:nowrap;font-family:var(--font)}
-.tbb:hover{background:var(--s1)}
-.tbb.p{background:var(--fa);color:var(--oa);border-color:var(--fa)}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;color:var(--ts);font-size:13px;border-left:2px solid transparent;user-select:none;transition:background .15s}
+.ni:hover{background:rgba(80,130,255,0.10);color:var(--tp)}
+.ni.ac{background:rgba(42,120,214,0.22);color:var(--ta);border-left-color:var(--ta)}
+.ni i{font-size:16px;width:18px}
+.sbf{padding:12px 16px;border-top:1px solid var(--bd)}
+/* Zone principale (à droite de la sidebar sur desktop) */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+
+/* ── TOPBAR ── */
+.topbar{height:52px;display:flex;align-items:center;gap:10px;padding:0 16px;background:rgba(2,5,16,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(80,120,255,0.10);position:sticky;top:0;z-index:100;flex-shrink:0}
+.pt{font-size:14px;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbar{display:flex;align-items:center;gap:8px;background:var(--s1);border-radius:20px;padding:6px 12px;width:220px}
+.sbar input{background:none;border:none;outline:none;font-size:12px;color:var(--tp);width:100%}
+.tbb{padding:6px 14px;border:0.5px solid var(--bd);border-radius:var(--r);background:var(--s1);color:var(--tp);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.tbb:hover{background:var(--s2)}
+.tbb.p{background:var(--fa);color:var(--oa);border-color:transparent}
 .tbb.p:hover{background:var(--fah)}
-.lob{display:flex;align-items:center;gap:5px;padding:6px 10px;border:none;border-radius:var(--r);background:var(--s1);cursor:pointer;font-size:12px;color:var(--tm);font-family:var(--font)}
-.hbtn{width:36px;height:36px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tp);font-size:20px;border-radius:var(--r);flex-shrink:0;font-family:var(--font)}
-.hbtn:hover{background:var(--s1)}
+.lob{padding:6px 10px;border:none;background:none;cursor:pointer;color:var(--tm);font-size:12px;display:flex;align-items:center;gap:6px}
 .lob:hover{color:var(--td)}
+.hbtn{width:36px;height:36px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--tp);font-size:20px;border-radius:var(--r);flex-shrink:0}
+.hbtn:hover{background:var(--s1)}
 .content{flex:1;overflow-y:auto;padding:20px}
 .H{display:none!important}
 
 /* ── COMPONENTS ── */
-.kgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
-.kpi{background:var(--s1);border-radius:var(--r);padding:14px 16px;border:none}
+.kpi{background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.12);border-radius:var(--r);padding:14px 16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .kl{font-size:11px;color:var(--tm);margin-bottom:6px}
 .kv{font-size:20px;font-weight:500}
 .kd{font-size:11px;margin-top:4px}
 .kd.up{color:var(--tg)}
 .kd.dn{color:var(--td)}
 .dgrid{display:grid;grid-template-columns:1fr 300px;gap:16px}
-.card{background:var(--s2);border:none;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card{background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.12);border-radius:12px;padding:16px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .ct{font-size:13px;font-weight:500;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .ct span{font-size:11px;font-weight:400;color:var(--tm)}
 .cwrap{height:180px;position:relative}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px}
-.sm{background:var(--s1);border-radius:var(--r);padding:10px 14px}
+.sm{background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.10);border-radius:var(--r);padding:10px 14px}
 .sml{font-size:10px;color:var(--tm)}
 .smv{font-size:16px;font-weight:500;margin-top:3px}
 .flt{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.fb{padding:5px 12px;border:none;border-radius:20px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--ts);font-family:var(--font)}
+.fb{padding:5px 12px;border:0.5px solid var(--bd);border-radius:20px;font-size:12px;cursor:pointer;background:var(--s1);color:var(--ts)}
 .fb.ac{background:var(--ba);color:var(--ta);border-color:var(--bda)}
 .sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .sh h2{font-size:14px;font-weight:500}
-.dt{width:100%;border-collapse:collapse;font-size:13px}
-.dt th{text-align:left;padding:8px 12px;font-size:10px;font-weight:500;color:var(--tm);border-bottom:1px solid var(--s1);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
-.dt td{padding:9px 12px;border-bottom:1px solid var(--s0);vertical-align:middle}
+.dt{width:100%;border-collapse:collapse;font-size:13px;background:transparent}
+.dt th{text-align:left;padding:8px 12px;font-size:10px;font-weight:500;color:var(--tm);border-bottom:1px solid var(--bd);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;background:rgba(80,130,255,0.06)}
+.dt td{padding:9px 12px;border-bottom:1px solid var(--bd);vertical-align:middle}
 .dt tr:last-child td{border-bottom:none}
-.dt tr:hover td{background:var(--s1)}
+.dt tr:hover td{background:rgba(80,130,255,0.06)}
 .bdg{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
 .bgg{background:var(--bg);color:var(--tg)}
 .bgr{background:var(--br);color:var(--td)}
 .bga{background:var(--bw);color:var(--tw)}
 .bgb{background:var(--ba);color:var(--ta)}
-.ib{width:28px;height:28px;border:none;border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--s1);color:var(--ts);font-size:14px;font-family:var(--font)}
+.bgo{background:var(--bpo);color:var(--tpo)}
+.ib{width:28px;height:28px;border:none;border-radius:var(--r);display:flex;align-items:center;justify-content:center;cursor:pointer;background:var(--s1);color:var(--ts);font-size:14px}
 .ib:hover{background:var(--br);color:var(--td)}
 .ib.ed:hover{background:var(--ba);color:var(--ta)}
 .ar{display:flex;gap:6px}
-.swrap{width:80px;background:var(--s0);border-radius:4px;overflow:hidden;height:6px;display:inline-block;vertical-align:middle}
+.swrap{width:80px;background:var(--s1);border-radius:4px;overflow:hidden;height:6px;display:inline-block;vertical-align:middle}
 .sfill{height:100%;border-radius:4px}
-.nb{display:inline-flex;flex-direction:column;align-items:center;min-width:40px}
-.nv{font-size:13px;font-weight:500}
-.nl{font-size:9px;color:var(--tm);margin-top:1px}
-.xbtn{background:none;border:none;cursor:pointer;color:var(--tm);font-size:14px;padding:2px;display:flex;align-items:center;font-family:var(--font)}
-.drow{display:none;background:var(--s0)}
+.drow{display:none;background:rgba(4,10,28,0.5)}
 .drow.op{display:table-row}
 .din{padding:14px 16px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.dc{background:var(--s2);border:none;border-radius:var(--r);padding:10px 12px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.dc{background:var(--s1);border-radius:var(--r);padding:10px 12px}
 .dcl{font-size:10px;color:var(--tm);margin-bottom:4px}
 .dcv{font-size:15px;font-weight:500}
 .dcs{font-size:10px;color:var(--tm);margin-top:2px}
-.pb{height:5px;background:var(--s0);border-radius:3px;overflow:hidden;margin-top:6px}
+.pb{height:5px;background:var(--s1);border-radius:3px;overflow:hidden;margin-top:6px}
 .pf{height:100%;border-radius:3px}
 .cgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
-.cc{background:var(--s2);border:none;border-radius:12px;padding:14px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.cc{background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.12);border-radius:12px;padding:14px;cursor:pointer;transition:border-color .15s}
 .cc:hover{border-color:var(--bda)}
 .cav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;margin-bottom:10px}
 .ls-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s1);border-radius:var(--r);margin-bottom:6px}
@@ -153,12 +157,18 @@ button,select,input{touch-action:manipulation} /* évite le double-tap zoom sur 
 .ls-qty{font-size:12px;font-weight:500}
 .ls-qty.cr{color:var(--td)}
 .ls-qty.wa{color:var(--tw)}
-.pbar{height:5px;background:var(--s0);border-radius:3px;overflow:hidden;margin-top:6px}
+.pbar{height:5px;background:var(--s1);border-radius:3px;overflow:hidden;margin-top:6px}
 .pfill{height:100%;border-radius:3px}
+.pbar2{height:4px;background:var(--s1);border-radius:2px;overflow:hidden;margin-top:6px}
+.pfill2{height:100%;border-radius:2px}
+.nb{display:inline-flex;flex-direction:column;align-items:center;min-width:40px}
+.nv{font-size:13px;font-weight:500}
+.nl{font-size:9px;color:var(--tm);margin-top:1px}
+.xbtn{background:none;border:none;cursor:pointer;color:var(--tm);font-size:14px;padding:2px;display:flex;align-items:center}
 
 /* ── FINANCES ── */
 .fgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:20px}
-.fk{border-radius:12px;padding:14px 16px;border:none;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.fk{border-radius:12px;padding:14px 16px;border:1px solid var(--bd)}
 .fk.rv{background:var(--bg)}
 .fk.ex{background:var(--br)}
 .fk.pr{background:var(--ba)}
@@ -172,43 +182,32 @@ button,select,input{touch-action:manipulation} /* évite le double-tap zoom sur 
 .fk.fx .fkl,.fk.fx .fkv{color:var(--tpo)}
 .fkv{font-size:17px;font-weight:500}
 .fks{font-size:10px;color:var(--tm);margin-top:3px}
-.fform{background:var(--s2);border:none;border-radius:12px;padding:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.fform{background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.12);border-radius:12px;padding:16px;margin-bottom:16px}
 .fgr{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end}
 .ffd{display:flex;flex-direction:column;gap:4px}
-.ffdi .fi{width:100%}
 select.fi{cursor:pointer;appearance:auto}
-.addb{padding:9px 16px;background:var(--fa);color:var(--oa);border:none;border-radius:var(--r);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;font-family:var(--font)}
+.addb{padding:9px 16px;background:var(--fa);color:var(--oa);border:none;border-radius:var(--r);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap}
 .addb:hover{background:var(--fah)}
 .trow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:0.5px solid var(--bd);font-size:13px}
 .trow:last-child{border-bottom:none}
 .tbox{background:var(--s1);border-radius:12px;padding:16px;margin-top:16px}
-.pbar2{height:4px;background:var(--s0);border-radius:2px;overflow:hidden;margin-top:6px}
-.pfill2{height:100%;border-radius:2px}
 
 /* ── SETTINGS ── */
 .stsec{margin-bottom:20px}
 .stsec h3{font-size:11px;font-weight:500;color:var(--tm);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
-.strow{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--s2);border:none;border-radius:var(--r);margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.strow{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(4,10,28,0.78);border:1px solid rgba(80,130,255,0.10);border-radius:var(--r);margin-bottom:6px}
 .strl{font-size:13px;font-weight:500}
 .strs{font-size:11px;color:var(--tm);margin-top:2px}
 
-/* ── SIDEBAR SLIDE ── */
-.sb{transition:transform 0.25s ease;z-index:200}
-.sb.collapsed{transform:translateX(-220px);position:fixed;top:0;left:0;height:100vh}
-.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:199}
-.sb-overlay.open{display:block}
-.hbtn{width:36px;height:36px;border:0.5px solid var(--bd);border-radius:var(--r);background:none;cursor:pointer;color:var(--ts);font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hbtn:hover{background:var(--s1);color:var(--tp)}
-
 /* ── MODAL ── */
-.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);align-items:center;justify-content:center;z-index:1000}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,4,16,0.82);align-items:center;justify-content:center;z-index:9999}
 .mo.op{display:flex}
-.mbox{background:var(--s2);border:none;border-radius:16px;padding:28px;width:380px;max-width:96vw;box-shadow:0 8px 32px rgba(0,0,0,.18)}
-.mbox.wide{width:460px}
+.mbox{background:rgba(4,9,26,0.97);border:1px solid rgba(80,130,255,0.18);border-radius:16px;padding:28px;width:380px;max-width:96vw;box-shadow:0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.mbox.wide{width:480px}
 .mt{font-size:15px;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:8px}
 .ms{font-size:12px;color:var(--tm);margin-bottom:20px;line-height:1.5}
 .mac{display:flex;gap:8px;margin-top:20px}
-.mac button{flex:1;padding:10px;border-radius:var(--r);font-size:13px;cursor:pointer;font-family:var(--font)}
+.mac button{flex:1;padding:10px;border-radius:var(--r);font-size:13px;cursor:pointer}
 .bc{background:none;border:0.5px solid var(--bds);color:var(--ts)}
 .bc:hover{background:var(--s1)}
 .bx{background:var(--fd);color:var(--od);border:none}
@@ -218,161 +217,135 @@ select.fi{cursor:pointer;appearance:auto}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:6px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
 
-/* ══════════════════════════════════════════════
-   RESPONSIVE MOBILE — iPhone / petits écrans
-   ══════════════════════════════════════════════ */
+/* ── DESKTOP LAYOUT (>900px) ── */
+@media(min-width:900px){
+  /* Sidebar toujours visible */
+  .sb{
+    transform:translateX(0) !important;
+    position:relative !important;
+    height:100vh;
+    flex-shrink:0;
+    box-shadow:none !important;
+  }
+  .overlay,.sb-overlay{display:none !important}
+
+  /* Cacher hamburger sur desktop */
+  .hbtn:first-of-type{display:none}
+
+  /* Cacher nav mobile */
+  #mobileNav{display:none !important}
+  #mobileSearchBtn{display:none !important}
+
+  /* Barre recherche visible */
+  .sbar{display:flex !important}
+
+  /* Content sans padding-bottom mobile */
+  .content{padding-bottom:20px}
+
+  /* KPIs 3 col */
+  #pg-dashboard > div[style*="grid-template-columns"]{
+    grid-template-columns:repeat(3,1fr) !important;
+  }
+  .dgrid{grid-template-columns:1fr 320px !important}
+  #caisseGrid{grid-template-columns:1fr 380px !important}
+  .fgrid{grid-template-columns:repeat(3,1fr) !important}
+  .fgr{grid-template-columns:1fr 1fr 1fr auto !important}
+  .mbox{max-height:90vh;overflow-y:auto}
+  .g2{grid-template-columns:1fr 1fr !important}
+  .g3{grid-template-columns:1fr 1fr 1fr !important}
+}
+
+/* ── GRANDS ECRANS (>1200px) ── */
+@media(min-width:1200px){
+  .content{padding:24px 32px}
+  #pg-dashboard > div[style*="grid-template-columns"]{
+    grid-template-columns:repeat(4,1fr) !important;
+  }
+  .fgrid{grid-template-columns:repeat(5,1fr) !important}
+  .mbox.wide{width:560px}
+  #caisseGrid{grid-template-columns:1fr 420px !important}
+  #caisseProdGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr)) !important}
+}
+
+/* ── NOM BOUTIQUE DÉFILANT (rebond) ── */
+.bounce-wrap{flex:1;overflow:hidden;min-width:0;position:relative}
+.bounce-name{display:inline-block;white-space:nowrap;font-size:15px;font-weight:700;letter-spacing:6px;color:#7abaff;animation:nameBounce 7s ease-in-out infinite}
+@keyframes nameBounce{0%{transform:translateX(0)}45%{transform:translateX(calc(100% - 180px))}55%{transform:translateX(calc(100% - 180px))}100%{transform:translateX(0)}}
+
+/* ── MOBILE NAV ── */
+#mobileNav{display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(2,5,18,0.94);border-top:1px solid rgba(80,130,255,0.12);z-index:150;padding:6px 0 max(6px,env(safe-area-inset-bottom));box-shadow:0 -2px 10px rgba(0,0,0,.3);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#mobileSearchBtn{display:none}
+#mobileSearchOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:300;align-items:flex-start;padding:12px}
+#mobileSearchOverlay.op{display:flex}
+#mobileSearchOverlay .msbox{background:rgba(4,9,26,0.97);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;width:100%;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+#mobileSearchOverlay input{flex:1;background:none;border:none;outline:none;font-size:15px;color:var(--tp)}
+
+/* ── RESPONSIVE MOBILE ── */
 @media(max-width:640px){
-
-  /* ── Login ── */
   .lbox{width:92vw;padding:28px 20px}
-
-  /* ── Topbar ── */
   .topbar{padding:0 12px;gap:8px;height:52px}
   .pt{font-size:14px}
-  .sbar{display:none} /* barre de recherche cachée sur mobile */
-  .lob span{display:none} /* texte "Sortir" caché, icône seule */
-  .tbb.p span{display:none} /* texte bouton "+" caché */
+  .sbar{display:none}
+  .lob span{display:none}
+  .tbb.p span{display:none}
   .tbb.p{padding:6px 10px}
-
-  /* ── Content ── */
-  .content{padding:12px}
-
-  /* ── KPIs dashboard ── */
-  #pg-dashboard > div[style*="grid-template-columns:repeat(auto-fill,minmax(145px"]{
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap:8px !important;
-  }
+  .content{padding:12px;padding-bottom:80px}
   .kpi{padding:10px 12px}
   .kv{font-size:16px}
-
-  /* ── Grille dashboard (graphique + stock) ── */
-  .dgrid{grid-template-columns:1fr !important}
-
-  /* ── Graphiques ── */
+  .dgrid{grid-template-columns:1fr!important}
   .cwrap{height:160px}
-
-  /* ── KPIs sgrid ── */
-  .sgrid{grid-template-columns:repeat(2,1fr) !important}
-
-  /* ── Tableau bénéfice par produit ── */
-  #dbProdTable th:nth-child(5),
-  #dbProdTable td:nth-child(5),
-  #dbProdTable th:nth-child(6),
-  #dbProdTable td:nth-child(6){display:none} /* masquer colonnes dép.unit et bén.net/u */
-
-  /* ── Tableaux généraux scrollables ── */
+  .sgrid{grid-template-columns:repeat(2,1fr)!important}
+  .din{grid-template-columns:repeat(2,1fr)!important}
   .card{overflow-x:auto}
   .dt{min-width:480px}
-  #pg-dashboard .card .dt{min-width:560px}
-
-  /* ── Finances layout ── */
-  #pg-finances > div[style*="grid-template-columns:1fr 1fr"]{
-    grid-template-columns: 1fr !important;
-  }
-  .fgrid{grid-template-columns:repeat(2,1fr) !important}
-  .fgr{grid-template-columns:1fr 1fr !important}
-  .fgr > button{grid-column:1/-1}
-
-  /* ── Calcul commercial ── */
-  #pg-calcul > div[style*="grid-template-columns:1fr 1fr"]{
-    grid-template-columns:1fr !important;
-  }
-
-  /* ── Formulaire ajout dépense ── */
-  #pg-finances .card > div[style*="grid-template-columns:1fr 1fr auto auto"]{
-    grid-template-columns:1fr 1fr !important;
-  }
-  #pg-finances .card > div[style*="grid-template-columns:1fr 1fr auto auto"] > button{
-    grid-column:1/-1;
-  }
-
-  /* ── CMV / Revenus form ── */
-  #pg-finances .card > div[style*="display:flex;gap:8px"]{
-    flex-wrap:wrap;
-  }
-  #pg-finances .card > div[style*="display:flex;gap:8px"] .addb{
-    width:100%;justify-content:center;
-  }
-
-  /* ── Grille résumé financier ── */
-  #dbFinSummary{grid-template-columns:repeat(2,1fr) !important}
-
-  /* ── Détail produit expand ── */
-  .din{grid-template-columns:repeat(2,1fr) !important}
-
-  /* ── Modales ── */
-  .mbox{padding:20px 16px;border-radius:12px}
-  .mbox.wide{width:96vw}
-  .g2{grid-template-columns:1fr !important}
-  .g3{grid-template-columns:1fr 1fr !important}
-
-  /* ── Boutons modal en colonne sur très petit écran ── */
+  .fgrid{grid-template-columns:1fr 1fr!important}
+  .fgr{grid-template-columns:1fr 1fr!important}
+  .fgr>button{grid-column:1/-1}
+  .g2{grid-template-columns:1fr!important}
+  .g3{grid-template-columns:1fr 1fr!important}
   .mac{flex-direction:column}
-
-  /* ── Paramètres ── */
   .strow{flex-wrap:wrap;gap:8px}
-  .strow > button,.strow > span{margin-left:0 !important}
-
-  /* ── Filtres ── */
-  .flt{gap:6px}
-  .fb{padding:4px 10px;font-size:11px}
-
-  /* ── Période banner ── */
-  #periodeBar > div:last-child{
-    flex-direction:column;align-items:stretch;gap:6px;width:100%;
-  }
-  #periodeBar > div:last-child > div{text-align:left}
-
-  /* ── Résumé finances sticky ── */
-  #pg-finances .card[style*="position:sticky"]{
-    position:relative !important;top:auto !important;
-  }
-
-  /* ── Rapport cards ── */
-  #pg-rapports > div[style*="grid-template-columns"]{
-    grid-template-columns:1fr 1fr !important;
-  }
-
-  /* ── Bottom navigation bar (mobile-only) ── */
-  #mobileNav{
-    display:flex;
-    position:fixed;bottom:0;left:0;right:0;
-    background:var(--s2);
-    border-top:1px solid var(--bd);
-    z-index:150;
-    padding:6px 0 max(6px,env(safe-area-inset-bottom));
-    box-shadow:0 -2px 10px rgba(0,0,0,.08);
-  }
-  .content{padding-bottom:80px} /* espace pour la nav bar */
-
-  /* ── Topbar search button (mobile) ── */
+  .mbox{padding:20px 16px}
+  #mobileNav{display:flex}
   #mobileSearchBtn{display:flex}
-}
-
-/* Cacher la nav bar sur desktop */
-#mobileNav{display:none}
-#mobileSearchBtn{display:none}
-
-/* Barre de recherche mobile (overlay) */
-#mobileSearchOverlay{
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;
-  align-items:flex-start;padding:12px;
-}
-#mobileSearchOverlay.op{display:flex}
-#mobileSearchOverlay .msbox{
-  background:var(--s2);border-radius:12px;padding:12px 14px;
-  display:flex;gap:10px;align-items:center;width:100%;
-  box-shadow:0 4px 20px rgba(0,0,0,.15);
-}
-#mobileSearchOverlay input{
-  flex:1;background:none;border:none;outline:none;
-  font-size:15px;color:var(--tp);font-family:var(--font);
 }
 </style>
 </head>
 <body>
 
 <!-- ═══ LOGIN ═══ -->
+<!-- ═══ FOND DÉCORATIF FIXE ═══ -->
+<div id="bgDeco" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden">
+  <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="bgGlow1" cx="18%" cy="22%" r="42%">
+        <stop offset="0%" stop-color="#1448c8" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+      <radialGradient id="bgGlow2" cx="88%" cy="80%" r="38%">
+        <stop offset="0%" stop-color="#0a2a8e" stop-opacity="0.14"/>
+        <stop offset="100%" stop-color="#000" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#bgGlow1)"/>
+    <rect width="100%" height="100%" fill="url(#bgGlow2)"/>
+    <line x1="7%" y1="0" x2="7%" y2="100%" stroke="#4080ff" stroke-width="0.5" stroke-opacity="0.06"/>
+    <line x1="93%" y1="0" x2="93%" y2="100%" stroke="#4080ff" stroke-width="0.5" stroke-opacity="0.06"/>
+    <line x1="0" y1="9%" x2="100%" y2="9%" stroke="#4080ff" stroke-width="0.3" stroke-opacity="0.05"/>
+    <line x1="0" y1="86%" x2="100%" y2="86%" stroke="#4080ff" stroke-width="0.4" stroke-opacity="0.06"/>
+    <circle cx="50%" cy="4.5%" r="3" fill="#a0c8ff" fill-opacity="0.15"/>
+    <line x1="50%" y1="6%" x2="50%" y2="9%" stroke="#a0c8ff" stroke-width="0.7" stroke-opacity="0.15"/>
+    <path d="M 43% 9% Q 50% 7% 57% 9%" fill="none" stroke="#a0c8ff" stroke-width="0.5" stroke-opacity="0.12"/>
+    <circle cx="43%" cy="9%" r="1.5" fill="#a0c8ff" fill-opacity="0.15"/>
+    <circle cx="57%" cy="9%" r="1.5" fill="#a0c8ff" fill-opacity="0.15"/>
+    <circle cx="45%" cy="5%" r="0.6" fill="#c8a96e" fill-opacity="0.22"/>
+    <circle cx="55%" cy="5%" r="0.6" fill="#c8a96e" fill-opacity="0.22"/>
+    <rect x="42%" y="11.5%" width="16%" height="10%" rx="1" fill="none" stroke="#c8a96e" stroke-width="0.4" stroke-opacity="0.10"/>
+    <line x1="0" y1="100%" x2="100%" y2="100%" stroke="#c8a96e" stroke-width="1" stroke-opacity="0.08"/>
+    <line x1="0" y1="0" x2="100%" y2="0" stroke="#4080ff" stroke-width="1" stroke-opacity="0.10"/>
+  </svg>
+</div>
+
 <div id="SL">
   <div class="lbox">
     <div class="llogo"><i class="ti ti-armchair"></i> <span id="login-title">Déco &amp; Meubles</span></div>
@@ -410,6 +383,7 @@ select.fi{cursor:pointer;appearance:auto}
       <div class="ni" data-p="finances"><i class="ti ti-calculator"></i> Finances &amp; Bénéfice</div>
       <div class="ni" data-p="calcul"><i class="ti ti-math"></i> Calcul commercial</div>
       <div class="ni" data-p="rapports"><i class="ti ti-file-analytics"></i> Rapports</div>
+      <div class="ni" data-p="historique"><i class="ti ti-calendar-stats"></i> Historique ventes</div>
       <div class="ns">Administration</div>
       <div class="ni" data-p="settings"><i class="ti ti-settings"></i> Paramètres</div>
     </nav>
@@ -423,10 +397,13 @@ select.fi{cursor:pointer;appearance:auto}
   </div>
 
   <!-- MAIN -->
-  <div class="main">
+  <div class="main-area">
     <div class="topbar">
       <button class="hbtn" onclick="toggleSidebar()" title="Menu" aria-label="Ouvrir/fermer le menu"><i class="ti ti-menu-2"></i></button>
-      <div class="pt" id="pgTitle">Tableau de bord</div>
+      <!-- Nom boutique défilant rebond -->
+      <div class="bounce-wrap">
+        <span class="bounce-name shop-name">ORION STORE</span>
+      </div>
       <div class="sbar"><i class="ti ti-search" style="color:var(--tm);font-size:15px"></i><input type="text" placeholder="Rechercher…"/></div>
       <button id="mobileSearchBtn" class="hbtn" onclick="openMobileSearch()" title="Rechercher"><i class="ti ti-search"></i></button>
       <button class="tbb p" id="topBtn" onclick="topAction()"><i class="ti ti-plus"></i> <span id="topLbl">Nouvelle vente</span></button>
@@ -438,40 +415,34 @@ select.fi{cursor:pointer;appearance:auto}
       <!-- DASHBOARD -->
       <div id="pg-dashboard">
 
-        <!-- Barre synthèse période -->
-        <div id="dbPeriodeBanner" style="background:var(--ba);border-radius:12px;padding:10px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-          <div style="flex:1"><div style="font-size:11px;font-weight:600;color:var(--ta)"><i class="ti ti-clock"></i> Période en cours</div><div style="font-size:13px;color:var(--tp);margin-top:2px" id="dbPeriodeLabel">Période 1</div></div>
-          <div style="font-size:12px;color:var(--ta);cursor:pointer" onclick="showPage('finances')">→ Gérer les finances</div>
-        </div>
-
         <!-- KPI globaux période -->
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px;margin-bottom:16px">
-          <div class="kpi" style="cursor:pointer" onclick="showPage('ventes')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('ventes')">
             <div class="kl">CA total (ventes payées)</div>
             <div class="kv" id="dbCA" style="color:var(--tg)">—</div>
             <div class="kd" id="dbCAd">—</div>
           </div>
-          <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
             <div class="kl">CMV total (coût marchandises)</div>
             <div class="kv" id="dbCMV" style="color:var(--tw)">—</div>
             <div class="kd" id="dbCMVd">— ligne(s)</div>
           </div>
-          <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
             <div class="kl">Bénéfice brut (CA − CMV)</div>
             <div class="kv" id="dbBenefBrut">—</div>
             <div class="kd" id="dbBenefBrutD">—</div>
           </div>
-          <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
             <div class="kl">Dépenses opérationnelles</div>
             <div class="kv" id="dbDepOp" style="color:var(--td)">—</div>
             <div class="kd" id="dbDepOpD">— dépense(s)</div>
           </div>
-          <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
             <div class="kl">Bénéfice net (brut − dép.)</div>
             <div class="kv" id="dbBenef">—</div>
             <div class="kd" id="dbBenefD">—</div>
           </div>
-          <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+          <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
             <div class="kl">Marge nette %</div>
             <div class="kv" id="dbMarge">—</div>
             <div class="kd" id="dbMargeD">bén. net / CA</div>
@@ -504,7 +475,7 @@ select.fi{cursor:pointer;appearance:auto}
         </div>
 
         <div class="card" style="margin-top:16px">
-          <div class="ct">Résumé financier <span style="cursor:pointer;color:var(--ta)" onclick="showPage('finances')">→ Détail complet</span></div>
+          <div class="ct">Résumé financier <span style="cursor:pointer;color:var(--ta)" onclick="window.showPage('finances')">→ Détail complet</span></div>
           <div id="dbFinSummary" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px"></div>
         </div>
       </div>
@@ -624,26 +595,6 @@ select.fi{cursor:pointer;appearance:auto}
         <div class="sh"><h2>Finances &amp; Bénéfice</h2><button class="tbb" onclick="openReset('finances')" style="font-size:11px;color:var(--td)"><i class="ti ti-refresh"></i> Remettre à zéro</button></div>
 
         <!-- Bannière période en cours -->
-        <div id="periodeBar" style="background:var(--ba);border-radius:12px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-          <div style="flex:1">
-            <div style="font-size:12px;font-weight:600;color:var(--ta)"><i class="ti ti-clock"></i> Période en cours</div>
-            <div style="font-size:13px;color:var(--tp);margin-top:2px"><strong id="periodeNom">Période 1</strong> — <span id="periodeDebut">—</span> <span id="periodeFin"></span></div>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <div style="text-align:center;padding:6px 12px;background:var(--s2);border-radius:var(--r)">
-              <div style="font-size:10px;color:var(--tm)">Ventes période</div>
-              <div style="font-size:14px;font-weight:600;color:var(--tg)" id="periodeCA">0 FCFA</div>
-            </div>
-            <div style="text-align:center;padding:6px 12px;background:var(--s2);border-radius:var(--r)">
-              <div style="font-size:10px;color:var(--tm)">Bén. net période</div>
-              <div style="font-size:14px;font-weight:600" id="periodeBenef">0 FCFA</div>
-            </div>
-            <button class="addb" onclick="ouvrirNouvellePeriode()" style="background:var(--ta)">
-              <i class="ti ti-player-skip-forward"></i> Nouvelle période
-            </button>
-          </div>
-        </div>
-
         <!-- Historique périodes -->
         <div id="periodeHistorique" style="display:none;margin-bottom:16px">
           <div style="font-size:12px;font-weight:600;color:var(--tm);margin-bottom:8px"><i class="ti ti-history"></i> Historique des périodes</div>
@@ -714,6 +665,63 @@ select.fi{cursor:pointer;appearance:auto}
             <div class="card" style="position:sticky;top:16px">
               <div class="ct" style="font-size:14px;font-weight:600">Compte de résultat — Période en cours <span style="font-size:11px;font-weight:400;color:var(--tg)">● Temps réel</span></div>
               <div id="totalsBox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORIQUE VENTES -->
+      <div id="pg-historique" class="H">
+        <div class="sh">
+          <h2>Historique des ventes mensuelles</h2>
+          <div style="display:flex;gap:8px;align-items:center">
+            <select class="fi" id="histAnnee" onchange="renderHistorique()" style="width:auto;padding:6px 12px">
+            </select>
+            <button class="tbb" onclick="exportCSV('ventes')"><i class="ti ti-file-spreadsheet"></i> Export CSV</button>
+          </div>
+        </div>
+
+        <!-- Résumé annuel -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px" id="histKpis"></div>
+
+        <!-- Graphique barres 12 mois -->
+        <div class="card" style="margin-bottom:16px">
+          <div class="ct"><i class="ti ti-chart-bar" style="color:var(--ta)"></i> CA mensuel <span id="histAnneeLabel"></span></div>
+          <div class="cwrap" style="height:220px"><canvas id="histChart"></canvas></div>
+        </div>
+
+        <!-- Tableau mois par mois -->
+        <div class="card">
+          <div class="ct"><i class="ti ti-calendar" style="color:var(--ta)"></i> Détail par mois</div>
+          <div style="overflow-x:auto">
+            <table class="dt">
+              <thead>
+                <tr>
+                  <th>Mois</th>
+                  <th>Nb ventes</th>
+                  <th>CA total</th>
+                  <th>Moy/vente</th>
+                  <th>Meilleur produit</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="histTbody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Détail ventes du mois sélectionné -->
+        <div id="histDetailBox" style="display:none;margin-top:16px">
+          <div class="card">
+            <div class="ct">
+              <span><i class="ti ti-receipt" style="color:var(--ta)"></i> Ventes de <span id="histDetailMois"></span></span>
+              <button class="tbb" onclick="document.getElementById('histDetailBox').style.display='none'"><i class="ti ti-x"></i> Fermer</button>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="dt">
+                <thead><tr><th>N°</th><th>Client</th><th>Description</th><th>Montant</th><th>Statut</th><th>Paiement</th><th>Date</th></tr></thead>
+                <tbody id="histDetailTbody"></tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -1559,23 +1567,13 @@ function eye(id, btn) {
   btn.querySelector('i').className = show ? 'ti ti-eye-off' : 'ti ti-eye';
 }
 function doLogin() {
-  const pw = document.getElementById('lpw').value;
-  if (pw === PW) {
-    document.getElementById('SL').classList.add('H');
-    document.getElementById('SA').classList.add('A');
-    document.getElementById('lpw').value = '';
-    document.getElementById('lerr').textContent = '';
-    initApp();
-  } else {
-    document.getElementById('lerr').textContent = 'Mot de passe incorrect.';
-    document.getElementById('lpw').value = '';
-    document.getElementById('lpw').focus();
-  }
+  document.getElementById('SL').classList.add('H');
+  document.getElementById('SA').classList.add('A');
+  initApp();
 }
 function doLogout() {
   document.getElementById('SL').classList.remove('H');
   document.getElementById('SA').classList.remove('A');
-  document.getElementById('lpw').value = '';
 }
 
 /* ═══ MODALES ═══ */
@@ -1621,8 +1619,8 @@ function saveShop() {
 }
 
 /* ═══ NAVIGATION ═══ */
-const PAGE_TITLES = { dashboard:'Tableau de bord', caisse:'Caisse rapide', produits:'Produits', ventes:'Ventes & Factures', clients:'Clients', fournisseurs:'Fournisseurs', finances:'Finances & Bénéfice', calcul:'Calcul commercial', rapports:'Rapports', settings:'Paramètres' };
-const PAGE_ACTIONS = { dashboard:'Nouvelle vente', caisse:null, produits:'Ajouter un produit', ventes:'Nouvelle facture', clients:'Ajouter un client', fournisseurs:'Ajouter un fournisseur', finances:null, calcul:null, rapports:null, settings:null };
+const PAGE_TITLES = { dashboard:'Tableau de bord', caisse:'Caisse rapide', produits:'Produits', ventes:'Ventes & Factures', clients:'Clients', fournisseurs:'Fournisseurs', finances:'Finances & Bénéfice', calcul:'Calcul commercial', rapports:'Rapports', historique:'Historique des ventes', settings:'Paramètres' };
+const PAGE_ACTIONS = { dashboard:'Nouvelle vente', caisse:null, produits:'Ajouter un produit', ventes:'Nouvelle facture', clients:'Ajouter un client', fournisseurs:'Ajouter un fournisseur', finances:null, calcul:null, rapports:null, historique:null, settings:null };
 
 function showPage(name) {
   document.querySelectorAll('.content > div[id^="pg-"]').forEach(el => el.classList.add('H'));
@@ -1636,10 +1634,10 @@ function showPage(name) {
   // Init spécifiques pages
   if (name === 'caisse') initCaissePage();
   if (name === 'rapports') { updateRapports(); setTimeout(updateCharts, 100); }
+  if (name === 'historique') initHistorique();
 }
 document.querySelectorAll('.ni[data-p]').forEach(el => el.addEventListener('click', () => {
-  showPage(el.dataset.p);
-  // Fermer la sidebar après navigation
+  window.showPage(el.dataset.p);
   closeSidebar();
 }));
 function fltBtns(btn) { btn.closest('.flt').querySelectorAll('.fb').forEach(b => b.classList.remove('ac')); btn.classList.add('ac'); }
@@ -2167,11 +2165,7 @@ function ouvrirNouvellePeriode() {
   openModal('mDel');
 }
 
-function updatePeriodeBanner() {
-  const el = id => document.getElementById(id);
-  if (el('periodeNom')) el('periodeNom').textContent = periodeActuelle.nom;
-  if (el('periodeDebut')) el('periodeDebut').textContent = 'Depuis le ' + dateLabel(periodeActuelle.debut);
-}
+function updatePeriodeBanner() { /* bandeaux période supprimés */ }
 
 function togglePeriodesHist() {
   histVisible = !histVisible;
@@ -2578,27 +2572,27 @@ function updateDash() {
   const fs = document.getElementById('dbFinSummary');
   if (fs) {
     fs.innerHTML = `
-      <div class="kpi" style="cursor:pointer" onclick="showPage('ventes')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('ventes')">
         <div class="kl">CA</div><div class="kv" style="color:var(--tg)">${fcfa(CA)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Ventes</div>
       </div>
-      <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
         <div class="kl">CMV</div><div class="kv" style="color:var(--tw)">${fcfa(CMV)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Finances</div>
       </div>
-      <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
         <div class="kl">Bén. brut</div><div class="kv" style="color:${colV(benefBrut)}">${fcfa(benefBrut)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Finances</div>
       </div>
-      <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
         <div class="kl">Dép. opé.</div><div class="kv" style="color:var(--td)">${fcfa(depOp)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Finances</div>
       </div>
-      <div class="kpi" style="cursor:pointer" onclick="showPage('finances')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('finances')">
         <div class="kl">Bén. net</div><div class="kv" style="color:${colV(benefNet)}">${fcfa(benefNet)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Finances</div>
       </div>
-      <div class="kpi" style="cursor:pointer" onclick="showPage('produits')">
+      <div class="kpi" style="cursor:pointer" onclick="window.showPage('produits')">
         <div class="kl">Stock restant</div><div class="kv">${PRODS.reduce((s,p)=>s+(p.initial-p.vendu),0)}</div>
         <div style="font-size:10px;color:var(--ta);margin-top:3px">→ Produits</div>
       </div>`;
@@ -4063,6 +4057,194 @@ function renderClientDetail(clientIdx) {
   </div>`;
 }
 
+/* ══════════════════════════════════════════════════════
+   ═══ HISTORIQUE VENTES MENSUEL ═══
+   ══════════════════════════════════════════════════════ */
+let histChartInstance = null;
+const MOIS_LABELS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const MOIS_COURT  = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+
+function getVentesByMonth(year) {
+  // Retourne un tableau de 12 entrées {ventes:[], ca:0}
+  const months = Array.from({length:12}, () => ({ ventes:[], ca:0 }));
+  VENTES.forEach(v => {
+    if (!v.rawDate) return;
+    const d = new Date(v.rawDate);
+    if (d.getFullYear() !== year) return;
+    const m = d.getMonth();
+    months[m].ventes.push(v);
+    if (v.statut === 'payee') months[m].ca += v.montant;
+  });
+  return months;
+}
+
+function getAvailableYears() {
+  const years = new Set();
+  const now = new Date().getFullYear();
+  years.add(now);
+  VENTES.forEach(v => {
+    if (v.rawDate) years.add(new Date(v.rawDate).getFullYear());
+  });
+  return [...years].sort((a,b) => b - a);
+}
+
+function initHistorique() {
+  // Remplir le select années
+  const sel = document.getElementById('histAnnee');
+  if (!sel) return;
+  const years = getAvailableYears();
+  sel.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+  renderHistorique();
+}
+
+function renderHistorique() {
+  const sel = document.getElementById('histAnnee');
+  if (!sel) return;
+  const year = parseInt(sel.value) || new Date().getFullYear();
+  const months = getVentesByMonth(year);
+
+  // Label
+  const lbl = document.getElementById('histAnneeLabel');
+  if (lbl) lbl.textContent = year;
+
+  // KPIs annuels
+  const totalCA    = months.reduce((s,m) => s + m.ca, 0);
+  const totalVentes= months.reduce((s,m) => s + m.ventes.length, 0);
+  const moisActifs = months.filter(m => m.ventes.length > 0).length;
+  const meilleurMois = months.reduce((best, m, i) => m.ca > (best.ca||0) ? {...m, idx:i} : best, {ca:0, idx:-1});
+  const payees  = months.reduce((s,m) => s + m.ventes.filter(v=>v.statut==='payee').length, 0);
+  const attente = months.reduce((s,m) => s + m.ventes.filter(v=>v.statut==='attente').length, 0);
+
+  const kpis = document.getElementById('histKpis');
+  if (kpis) kpis.innerHTML = `
+    <div class="kpi"><div class="kl">CA annuel ${year}</div><div class="kv" style="color:var(--tg)">${fcfa(totalCA)}</div></div>
+    <div class="kpi"><div class="kl">Total ventes</div><div class="kv">${totalVentes}</div><div class="kd">${payees} payées · ${attente} en attente</div></div>
+    <div class="kpi"><div class="kl">Mois actifs</div><div class="kv">${moisActifs}<span style="font-size:13px;color:var(--tm)">/12</span></div></div>
+    <div class="kpi"><div class="kl">Moy. CA/mois</div><div class="kv" style="color:var(--ta)">${moisActifs > 0 ? fcfa(Math.round(totalCA/moisActifs)) : '—'}</div></div>
+    <div class="kpi"><div class="kl">Meilleur mois</div><div class="kv" style="color:var(--tw)">${meilleurMois.idx >= 0 ? MOIS_COURT[meilleurMois.idx] : '—'}</div><div class="kd">${meilleurMois.ca > 0 ? fcfa(meilleurMois.ca) : '—'}</div></div>
+  `;
+
+  // Graphique
+  const ctx = document.getElementById('histChart');
+  if (ctx) {
+    if (histChartInstance) histChartInstance.destroy();
+    const data = months.map(m => m.ca);
+    const maxVal = Math.max(...data, 1);
+    const tickCb = maxVal >= 1000000
+      ? v => (v/1000000).toFixed(1).replace('.0','')+'M'
+      : maxVal >= 1000 ? v => (v/1000).toFixed(0)+'k' : v => v;
+    histChartInstance = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: MOIS_COURT,
+        datasets: [{
+          label: 'CA ' + year,
+          data,
+          backgroundColor: data.map(v => v > 0 ? 'rgba(42,120,214,0.75)' : 'rgba(42,120,214,0.15)'),
+          borderColor: data.map(v => v > 0 ? '#2a78d6' : 'transparent'),
+          borderWidth: 1,
+          borderRadius: 6,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: ctx => ' ' + Math.round(ctx.raw).toLocaleString('fr-FR') + ' FCFA'
+            }
+          }
+        },
+        scales: {
+          x: { grid: { color:'rgba(80,130,255,0.08)' }, ticks: { color:'#6070a0', font:{size:11} } },
+          y: { grid: { color:'rgba(80,130,255,0.08)' }, ticks: { color:'#6070a0', font:{size:11}, callback: tickCb }, beginAtZero: true }
+        },
+        onClick: (e, els) => {
+          if (els.length > 0) showHistDetail(year, els[0].index);
+        }
+      }
+    });
+  }
+
+  // Tableau mensuel
+  const tbody = document.getElementById('histTbody');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  months.forEach((m, i) => {
+    const avg = m.ventes.length > 0 ? Math.round(m.ca / m.ventes.filter(v=>v.statut==='payee').length || 0) : 0;
+    // Meilleur produit du mois
+    const prodCount = {};
+    m.ventes.forEach(v => {
+      const key = v.prodIdx !== null && v.prodIdx !== undefined && PRODS[v.prodIdx]
+        ? PRODS[v.prodIdx].name : v.desc;
+      prodCount[key] = (prodCount[key]||0) + (v.montant||0);
+    });
+    const topProd = Object.entries(prodCount).sort((a,b)=>b[1]-a[1])[0];
+
+    const tr = document.createElement('tr');
+    tr.style.cursor = m.ventes.length > 0 ? 'pointer' : 'default';
+    tr.innerHTML = `
+      <td style="font-weight:500">${MOIS_LABELS[i]}</td>
+      <td>${m.ventes.length > 0 ? `<span class="bdg bgb">${m.ventes.length}</span>` : '<span style="color:var(--tm)">—</span>'}</td>
+      <td style="font-weight:500;color:${m.ca > 0 ? 'var(--tg)' : 'var(--tm)'}">${m.ca > 0 ? fcfa(m.ca) : '—'}</td>
+      <td style="color:var(--ta)">${avg > 0 ? fcfa(avg) : '—'}</td>
+      <td style="font-size:12px;color:var(--ts)">${topProd ? topProd[0].slice(0,22)+(topProd[0].length>22?'…':'') : '—'}</td>
+      <td>
+        ${m.ventes.length > 0
+          ? `<button class="ib" onclick="showHistDetail(${year},${i})" title="Voir détail"><i class="ti ti-eye"></i></button>`
+          : ''}
+      </td>`;
+    if (m.ventes.length > 0) tr.onclick = e => { if(e.target.closest('button')) return; showHistDetail(year, i); };
+    tbody.appendChild(tr);
+  });
+
+  // Masquer le détail si on change d'année
+  document.getElementById('histDetailBox').style.display = 'none';
+}
+
+function showHistDetail(year, monthIdx) {
+  const months = getVentesByMonth(year);
+  const m = months[monthIdx];
+  const box = document.getElementById('histDetailBox');
+  const lbl = document.getElementById('histDetailMois');
+  const tbody = document.getElementById('histDetailTbody');
+  if (!box || !lbl || !tbody) return;
+
+  lbl.textContent = MOIS_LABELS[monthIdx] + ' ' + year;
+  tbody.innerHTML = '';
+
+  if (m.ventes.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--tm);padding:16px">Aucune vente ce mois.</td></tr>';
+  } else {
+    // Trier par date décroissante
+    const sorted = [...m.ventes].sort((a,b) => new Date(b.rawDate||0) - new Date(a.rawDate||0));
+    sorted.forEach(v => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:500">${v.num}</td>
+        <td>${v.client}</td>
+        <td style="font-size:12px;color:var(--tm)">${v.desc.slice(0,30)+(v.desc.length>30?'…':'')}</td>
+        <td style="font-weight:500;color:var(--tg)">${fcfa(v.montant)}</td>
+        <td><span class="bdg ${v.statut==='payee'?'bgg':v.statut==='attente'?'bga':'bgr'}">${v.statut}</span></td>
+        <td style="font-size:12px">${v.paiement||'—'}</td>
+        <td style="font-size:12px;color:var(--tm)">${v.date}</td>`;
+      tbody.appendChild(tr);
+    });
+    // Ligne total
+    const totPaye = m.ventes.filter(v=>v.statut==='payee').reduce((s,v)=>s+v.montant,0);
+    const tr = document.createElement('tr');
+    tr.style.background = 'rgba(80,130,255,0.06)';
+    tr.innerHTML = `<td colspan="3" style="font-weight:600">Total payé</td><td colspan="4" style="font-weight:600;color:var(--tg)">${fcfa(totPaye)}</td>`;
+    tbody.appendChild(tr);
+  }
+
+  box.style.display = 'block';
+  box.scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
 function autosave() { saveData(); }
 
 /* ═══ RECHERCHE GLOBALE ═══ */
@@ -4071,16 +4253,16 @@ function doSearch(q) {
   q = q.toLowerCase();
   // Search in produits
   const prodMatch = PRODS.findIndex(p => p.name.toLowerCase().includes(q) || p.sku.toLowerCase().includes(q));
-  if (prodMatch >= 0) { showPage('produits'); toast('Produit trouvé : ' + PRODS[prodMatch].name); return; }
+  if (prodMatch >= 0) { window.showPage('produits'); toast('Produit trouvé : ' + PRODS[prodMatch].name); return; }
   // Search in ventes
   const venteMatch = VENTES.findIndex(v => v.client.toLowerCase().includes(q) || v.num.toLowerCase().includes(q));
-  if (venteMatch >= 0) { showPage('ventes'); toast('Facture trouvée : ' + VENTES[venteMatch].num); return; }
+  if (venteMatch >= 0) { window.showPage('ventes'); toast('Facture trouvée : ' + VENTES[venteMatch].num); return; }
   // Search in clients
   const clientMatch = CLIENTS.findIndex(c => c.nom.toLowerCase().includes(q));
-  if (clientMatch >= 0) { showPage('clients'); toast('Client trouvé : ' + CLIENTS[clientMatch].nom); return; }
+  if (clientMatch >= 0) { window.showPage('clients'); toast('Client trouvé : ' + CLIENTS[clientMatch].nom); return; }
   // Search in fournisseurs
   const fourMatch = FOURNISSEURS.findIndex(f => f.nom.toLowerCase().includes(q));
-  if (fourMatch >= 0) { showPage('fournisseurs'); toast('Fournisseur trouvé : ' + FOURNISSEURS[fourMatch].nom); return; }
+  if (fourMatch >= 0) { window.showPage('fournisseurs'); toast('Fournisseur trouvé : ' + FOURNISSEURS[fourMatch].nom); return; }
   toast('Aucun résultat pour "' + q + '"', 'warn');
 }
 
@@ -4558,20 +4740,20 @@ window.openModal = function(id) {
     #mobileNav .mnb.ac{color:var(--ta)}
     #mobileNav .mnb .mnbdot{width:4px;height:4px;border-radius:50%;background:var(--td);margin:0 auto;margin-top:1px}
   </style>
-  <button class="mnb ac" id="mn-dashboard" onclick="showPage('dashboard');setMobileNav('dashboard')">
+  <button class="mnb ac" id="mn-dashboard" onclick="window.showPage('dashboard');setMobileNav('dashboard')">
     <i class="ti ti-layout-dashboard"></i><span>Accueil</span>
   </button>
-  <button class="mnb" id="mn-caisse" onclick="showPage('caisse');setMobileNav('caisse')">
+  <button class="mnb" id="mn-caisse" onclick="window.showPage('caisse');setMobileNav('caisse')">
     <i class="ti ti-cash-register"></i><span>Caisse</span>
   </button>
-  <button class="mnb" id="mn-ventes" onclick="showPage('ventes');setMobileNav('ventes')">
+  <button class="mnb" id="mn-ventes" onclick="window.showPage('ventes');setMobileNav('ventes')">
     <i class="ti ti-receipt"></i><span>Ventes</span>
   </button>
-  <button class="mnb" id="mn-produits" onclick="showPage('produits');setMobileNav('produits')">
+  <button class="mnb" id="mn-produits" onclick="window.showPage('produits');setMobileNav('produits')">
     <i class="ti ti-box"></i><span>Stock</span>
     <div class="mnbdot" id="mnDot" style="display:none"></div>
   </button>
-  <button class="mnb" id="mn-finances" onclick="showPage('finances');setMobileNav('finances')">
+  <button class="mnb" id="mn-finances" onclick="window.showPage('finances');setMobileNav('finances')">
     <i class="ti ti-calculator"></i><span>Finances</span>
   </button>
   <button class="mnb" id="mn-more" onclick="toggleSidebar()">
@@ -4690,9 +4872,14 @@ self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;e.respondWi
 
   /* ── 6. Shortcuts via hash ── */
   window.addEventListener('load', () => {
+    // Démarrage direct — sans écran de login
+    document.getElementById('SL').classList.add('H');
+    document.getElementById('SA').classList.add('A');
+    initApp();
+
     const h = window.location.hash;
     if (h==='#caisse')  setTimeout(()=>{ if(typeof showPage==='function') showPage('caisse'); },600);
-    if (h==='#produit') setTimeout(()=>{ if(typeof showPage==='function'&&typeof openModal==='function'){showPage('produits');openModal('mAddProd');} },600);
+    if (h==='#produit') setTimeout(()=>{ if(typeof showPage==='function'&&typeof openModal==='function'){window.showPage('produits');openModal('mAddProd');} },600);
   });
 
 })();
